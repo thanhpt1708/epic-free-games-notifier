@@ -1,0 +1,36 @@
+name: Epic Games Weekly Free Games Notifier
+
+on:
+  # Chạy tự động vào lúc 02:00 UTC thứ Sáu hàng tuần (tức 09:00 sáng thứ Sáu giờ Việt Nam)
+  # Đảm bảo 100% game mới đã được cập nhật ổn định trên hệ thống Epic Games Store
+  schedule:
+    - cron: '0 2 * * 5'
+
+  # Cho phép bấm nút "Run workflow" để test hoặc chạy thủ công bất cứ lúc nào trên GitHub
+  workflow_dispatch:
+
+concurrency:
+  group: epicgames-notifier
+  cancel-in-progress: true
+
+jobs:
+  notify:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v7
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v7
+        with:
+          node-version: 24
+
+      - name: Check and Notify Free Games
+        env:
+          TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+          EPIC_COUNTRY: 'VN'
+          EPIC_LOCALE: 'vi-VN'
+        run: node src/index.js

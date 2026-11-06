@@ -1,0 +1,20 @@
+{
+  "name": "epicgames-weekly-notifier",
+  "version": "1.0.0",
+  "description": "Weekly Epic Games free games notifier for Telegram via GitHub Actions",
+  "type": "module",
+  "main": "src/index.js",
+  "scripts": {
+    "start": "node src/index.js",
+    "test": "node tests/test-parser.js"
+  },
+  "keywords": [
+    "epicgames",
+    "free-games",
+    "telegram-bot",
+    "github-actions"
+  ],
+  "author": "",
+  "license": "MIT"
+}
+
